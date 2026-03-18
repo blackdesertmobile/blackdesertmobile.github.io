@@ -2,117 +2,145 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>BDM Checklist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>검은사막 모바일 | 공식 모험가 체크리스트</title>
+    <link rel="shortcut icon" href="https://s1.blackdesertm.com/KR/Forum/BDM/Upload/WIKI/c0e9e49633320260310185122615.png">
     <style>
-        /* 외부에서 만든 것처럼 보이지 않게 하기 위한 초기화 */
+        /* [필수 규칙] 레이아웃 안정성 및 호환성 */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            margin: 0; padding: 0; 
-            background-color: transparent; /* 배경 투명 */
-            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; 
-            overflow: hidden; /* 스크롤바 숨김 */
+            margin: 0; padding: 10px; background-color: transparent; 
+            font-family: 'Malgun Gothic', sans-serif; 
         }
 
-        /* 체크리스트 전체 박스 */
-        .wrapper {
+        .container {
             width: 100%; max-width: 550px; margin: 0 auto;
-            border: 2px solid #d4af37; border-radius: 12px;
-            background: #fff; overflow: hidden;
+            background: #ffffff; border: 2px solid #d4af37; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
-        /* 헤더: 검은사막 모바일 스타일 */
+        /* 헤더 디자인 */
         .header {
-            background: linear-gradient(135deg, #5d3a1a 0%, #8c5326 100%);
-            padding: 20px; text-align: center; border-bottom: 3px solid #d4af37;
+            background: linear-gradient(135deg, #4e342e 0%, #212121 100%);
+            padding: 25px 15px; text-align: center; border-bottom: 3px solid #d4af37;
         }
-        .header h1 { margin: 0; font-size: 20px; color: #fff; letter-spacing: 1px; }
-        .sync_msg { font-size: 11px; color: #d4af37; margin-top: 6px; font-weight: bold; }
+        .header h1 { margin: 0; font-size: 20px; color: #ffffff; letter-spacing: 1px; }
+        .sync_text { font-size: 11px; color: #d4af37; margin-top: 8px; font-weight: bold; }
 
-        /* 카테고리 타이틀 */
-        .cate {
-            background: #fdfbf8; padding: 10px 15px; border-bottom: 1px solid #eee;
-            font-size: 14px; font-weight: bold; color: #8c5326; display: flex; justify-content: space-between;
+        /* 카테고리 바 */
+        .cate_bar {
+            background: #f5f5f5; padding: 12px 15px; border-bottom: 1px solid #e0e0e0;
+            font-size: 15px; font-weight: bold; color: #5d4037; display: flex; justify-content: space-between;
         }
+        .cate_bar .reset_info { font-weight: normal; font-size: 11px; color: #9e9e9e; }
 
-        /* 항목 스타일 */
-        label {
-            display: flex; align-items: center; padding: 15px;
+        /* 체크리스트 항목 */
+        .list_item {
+            display: flex; align-items: center; padding: 14px 15px;
             border-bottom: 1px solid #f1f1f1; cursor: pointer; transition: 0.2s;
         }
-        label:hover { background: #fffcf0; }
-        label:last-child { border-bottom: none; }
+        .list_item:hover { background: #fffcf0; }
+        .list_item:last-child { border-bottom: none; }
 
-        /* 체크박스 커스텀 */
+        /* 커스텀 체크박스 */
         input[type="checkbox"] {
             width: 24px; height: 24px; margin-right: 15px; cursor: pointer;
             accent-color: #8c5326; flex-shrink: 0;
         }
 
-        /* 텍스트 효과 */
-        .txt { font-size: 16px; color: #333; font-weight: bold; }
-        input:checked + .txt { color: #aaa; text-decoration: line-through; }
+        /* 텍스트 스타일 */
+        .txt { font-size: 16px; color: #333; font-weight: bold; line-height: 1.4; }
+        input:checked + .txt { color: #bdbdbd; text-decoration: line-through; }
 
-        /* 하단 초기화 버튼 */
-        .footer { background: #f8f8f8; padding: 15px; text-align: center; border-top: 1px solid #eee; }
-        .btn {
-            background: #666; color: #fff; border: none; padding: 8px 25px;
-            border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;
+        /* 하단 버튼 */
+        .footer { background: #fafafa; padding: 20px; text-align: center; border-top: 1px solid #eee; }
+        .reset_btn {
+            background: #455a64; color: #ffffff; border: none; padding: 10px 30px;
+            border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="container">
     <div class="header">
-        <h1>📜 모험가 필수 체크리스트</h1>
-        <div id="status" class="sync_msg">데이터 동기화 중...</div>
+        <h1>📜 모험가 정기 숙제 체크리스트</h1>
+        <div id="status" class="sync_text">● OFFICIAL DATA SYNC ACTIVE</div>
     </div>
 
-    <div class="cate">☀️ 일간 숙제 <span style="font-weight:normal; font-size:11px;">(00:00 리셋)</span></div>
-    <label><input type="checkbox" class="chk" data-type="daily" data-id="d1"><span class="txt">흑정령 / 길드 의뢰 완료</span></label>
-    <label><input type="checkbox" class="chk" data-type="daily" data-id="d2"><span class="txt">무료 펄 / 은화 상품 구매</span></label>
-    <label><input type="checkbox" class="chk" data-type="daily" data-id="d3"><span class="txt">무료 펄 / 은화 상품 구매</span></label>
+    <!-- 1. 일일 숙제 -->
+    <div class="cate_bar">☀️ 일일 숙제 <span class="reset_info">매일 00:00 초기화</span></div>
+    <div id="daily_list">
+        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d1"><span class="txt">모험의 열기 소모</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d2"><span class="txt">특수 지령 (2회)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d3"><span class="txt">수련의 탑 (엘리언/하둠/혼돈)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d4"><span class="txt">흑정령 의뢰 2종 완료</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d5"><span class="txt">길드 의뢰 완료</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d6"><span class="txt">파트리지오 상점 확인</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d7"><span class="txt">월드 경영 진행</span></label>
+    </div>
 
-    <div class="cate">📅 주간 숙제 <span style="font-weight:normal; font-size:11px;">(월요일 리셋)</span></div>
-    <label><input type="checkbox" class="chk" data-type="weekly" data-id="w1"><span class="txt">아리엘리의 틈 / 협동 토벌대</span></label>
-    <label><input type="checkbox" class="chk" data-type="weekly" data-id="w2"><span class="txt">대사막 사원 / 검은 사당</span></label>
+    <!-- 2. 주간 숙제 -->
+    <div class="cate_bar">📅 주간 숙제 <span class="reset_info">매주 월요일 초기화</span></div>
+    <div id="weekly_list">
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w1"><span class="txt">의형제 토벌</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w2"><span class="txt">라밤의 시련</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w3"><span class="txt">아토락시온 (2회)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w4"><span class="txt">셰레칸의 땅 주간 의뢰</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w5"><span class="txt">끝 없는 겨울의 산 주간 의뢰</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w6"><span class="txt">태양의 전장 (2승)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w7"><span class="txt">협동 토벌대 (가모스/오핀 등)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w8"><span class="txt">대사막 정제수 소모 (1시간)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w9"><span class="txt">파트리지오 & 루시 벤쿰 납품 (3종)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w10"><span class="txt">아르옐리의 틈 파견</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w11"><span class="txt">영광의 길 (5회)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w12"><span class="txt">혼돈의 균열 두루마리 (10장 구매)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w13"><span class="txt">검은사당 (5회)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w14"><span class="txt">수정 빙어튀김 납품</span></label>
+    </div>
 
-    <div class="cate">🏆 월간 숙제 <span style="font-weight:normal; font-size:11px;">(1일 리셋)</span></div>
-    <label><input type="checkbox" class="chk" data-type="monthly" data-id="m1"><span class="txt">대사막 모험 일지 / 이야기</span></label>
+    <!-- 3. 월간 숙제 -->
+    <div class="cate_bar">🏆 월간 숙제 <span class="reset_info">매월 1일 초기화</span></div>
+    <div id="monthly_list">
+        <label class="list_item"><input type="checkbox" class="chk" data-type="monthly" data-id="m1"><span class="txt">므로웨크의 미궁 (1회)</span></label>
+        <label class="list_item"><input type="checkbox" class="chk" data-type="monthly" data-id="m2"><span class="txt">대사막 사원 및 신기루 완료</span></label>
+    </div>
 
     <div class="footer">
-        <button class="btn" onclick="resetAll()">기록 초기화</button>
+        <button class="reset_btn" onclick="allClear()">모든 데이터 초기화</button>
     </div>
 </div>
 
 <script>
     (function() {
-        var KEY = 'BDM_SYNC_PRO_V1';
+        var STORAGE_KEY = 'BDM_ADVENTURER_TASKS_V1';
         var now = new Date();
         
-        // 리셋 키 생성
-        var dKey = now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();
-        var mKey = now.getFullYear()+'-'+(now.getMonth()+1);
-        var dayNum = now.getDay(), diff = now.getDate() - dayNum + (dayNum == 0 ? -6 : 1);
+        // 리셋 판단용 키 생성
+        var dK = now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate(); // 일간
+        var mK = now.getFullYear()+'-'+(now.getMonth()+1); // 월간
+        var dNum = now.getDay(), diff = now.getDate() - dNum + (dNum == 0 ? -6 : 1);
         var mon = new Date(now.setDate(diff));
-        var wKey = mon.getFullYear()+'-'+(mon.getMonth()+1)+'-'+mon.getDate();
+        var wK = mon.getFullYear()+'-'+(mon.getMonth()+1)+'-'+mon.getDate(); // 주간(월요일)
 
-        // 데이터 로드
-        var saved = localStorage.getItem(KEY);
+        var saved = localStorage.getItem(STORAGE_KEY);
         var data = saved ? JSON.parse(saved) : {lr:{}, tk:{}};
 
-        // 자동 리셋 처리
-        function clearBy(type) {
+        function resetTasks(type) {
             var el = document.getElementsByClassName('chk');
             for(var i=0; i<el.length; i++) {
-                if(el[i].getAttribute('data-type') === type) delete data.tk[el[i].getAttribute('data-id')];
+                if(el[i].getAttribute('data-type') === type) {
+                    delete data.tk[el[i].getAttribute('data-id')];
+                }
             }
         }
-        if(data.lr.d !== dKey){ clearBy('daily'); data.lr.d = dKey; }
-        if(data.lr.w !== wKey){ clearBy('weekly'); data.lr.w = wKey; }
-        if(data.lr.m !== mKey){ clearBy('monthly'); data.lr.m = mKey; }
 
-        // 로드 및 저장 이벤트
+        // 기간 만료 리셋 실행
+        if(data.lr.d !== dK) { resetTasks('daily'); data.lr.d = dK; }
+        if(data.lr.w !== wK) { resetTasks('weekly'); data.lr.w = wK; }
+        if(data.lr.m !== mK) { resetTasks('monthly'); data.lr.m = mK; }
+
+        // 이벤트 바인딩 및 데이터 로드
         var chks = document.getElementsByClassName('chk');
         for(var i=0; i<chks.length; i++) {
             (function(c){
@@ -120,16 +148,15 @@
                 if(data.tk[id]) c.checked = true;
                 c.onchange = function() {
                     data.tk[id] = this.checked;
-                    localStorage.setItem(KEY, JSON.stringify(data));
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
                 };
             })(chks[i]);
         }
-        localStorage.setItem(KEY, JSON.stringify(data));
-        document.getElementById('status').innerHTML = '● 실시간 자동 저장 활성화';
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
 
-        window.resetAll = function() {
-            if(confirm('모든 체크를 지울까요?')) {
-                localStorage.removeItem(KEY);
+        window.allClear = function() {
+            if(confirm('모든 기록을 삭제할까요?')) {
+                localStorage.removeItem(STORAGE_KEY);
                 location.reload();
             }
         };
