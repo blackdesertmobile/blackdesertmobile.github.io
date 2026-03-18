@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>BDM Checklist</title>
+    <style>
+        /* 외부에서 만든 것처럼 보이지 않게 하기 위한 초기화 */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { 
+            margin: 0; padding: 0; 
+            background-color: transparent; /* 배경 투명 */
+            font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif; 
+            overflow: hidden; /* 스크롤바 숨김 */
+        }
+
+        /* 체크리스트 전체 박스 */
+        .wrapper {
+            width: 100%; max-width: 550px; margin: 0 auto;
+            border: 2px solid #d4af37; border-radius: 12px;
+            background: #fff; overflow: hidden;
+        }
+
+        /* 헤더: 검은사막 모바일 스타일 */
+        .header {
+            background: linear-gradient(135deg, #5d3a1a 0%, #8c5326 100%);
+            padding: 20px; text-align: center; border-bottom: 3px solid #d4af37;
+        }
+        .header h1 { margin: 0; font-size: 20px; color: #fff; letter-spacing: 1px; }
+        .sync_msg { font-size: 11px; color: #d4af37; margin-top: 6px; font-weight: bold; }
+
+        /* 카테고리 타이틀 */
+        .cate {
+            background: #fdfbf8; padding: 10px 15px; border-bottom: 1px solid #eee;
+            font-size: 14px; font-weight: bold; color: #8c5326; display: flex; justify-content: space-between;
+        }
+
+        /* 항목 스타일 */
+        label {
+            display: flex; align-items: center; padding: 15px;
+            border-bottom: 1px solid #f1f1f1; cursor: pointer; transition: 0.2s;
+        }
+        label:hover { background: #fffcf0; }
+        label:last-child { border-bottom: none; }
+
+        /* 체크박스 커스텀 */
+        input[type="checkbox"] {
+            width: 24px; height: 24px; margin-right: 15px; cursor: pointer;
+            accent-color: #8c5326; flex-shrink: 0;
+        }
+
+        /* 텍스트 효과 */
+        .txt { font-size: 16px; color: #333; font-weight: bold; }
+        input:checked + .txt { color: #aaa; text-decoration: line-through; }
+
+        /* 하단 초기화 버튼 */
+        .footer { background: #f8f8f8; padding: 15px; text-align: center; border-top: 1px solid #eee; }
+        .btn {
+            background: #666; color: #fff; border: none; padding: 8px 25px;
+            border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="header">
+        <h1>📜 모험가 필수 체크리스트</h1>
+        <div id="status" class="sync_msg">데이터 동기화 중...</div>
+    </div>
+
+    <div class="cate">☀️ 일간 숙제 <span style="font-weight:normal; font-size:11px;">(00:00 리셋)</span></div>
+    <label><input type="checkbox" class="chk" data-type="daily" data-id="d1"><span class="txt">흑정령 / 길드 의뢰 완료</span></label>
+    <label><input type="checkbox" class="chk" data-type="daily" data-id="d2"><span class="txt">무료 펄 / 은화 상품 구매</span></label>
+
+    <div class="cate">📅 주간 숙제 <span style="font-weight:normal; font-size:11px;">(월요일 리셋)</span></div>
+    <label><input type="checkbox" class="chk" data-type="weekly" data-id="w1"><span class="txt">아리엘리의 틈 / 협동 토벌대</span></label>
+    <label><input type="checkbox" class="chk" data-type="weekly" data-id="w2"><span class="txt">대사막 사원 / 검은 사당</span></label>
+
+    <div class="cate">🏆 월간 숙제 <span style="font-weight:normal; font-size:11px;">(1일 리셋)</span></div>
+    <label><input type="checkbox" class="chk" data-type="monthly" data-id="m1"><span class="txt">대사막 모험 일지 / 이야기</span></label>
+
+    <div class="footer">
+        <button class="btn" onclick="resetAll()">기록 초기화</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        var KEY = 'BDM_SYNC_PRO_V1';
+        var now = new Date();
+        
+        // 리셋 키 생성
+        var dKey = now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();
+        var mKey = now.getFullYear()+'-'+(now.getMonth()+1);
+        var dayNum = now.getDay(), diff = now.getDate() - dayNum + (dayNum == 0 ? -6 : 1);
+        var mon = new Date(now.setDate(diff));
+        var wKey = mon.getFullYear()+'-'+(mon.getMonth()+1)+'-'+mon.getDate();
+
+        // 데이터 로드
+        var saved = localStorage.getItem(KEY);
+        var data = saved ? JSON.parse(saved) : {lr:{}, tk:{}};
+
+        // 자동 리셋 처리
+        function clearBy(type) {
+            var el = document.getElementsByClassName('chk');
+            for(var i=0; i<el.length; i++) {
+                if(el[i].getAttribute('data-type') === type) delete data.tk[el[i].getAttribute('data-id')];
+            }
+        }
+        if(data.lr.d !== dKey){ clearBy('daily'); data.lr.d = dKey; }
+        if(data.lr.w !== wKey){ clearBy('weekly'); data.lr.w = wKey; }
+        if(data.lr.m !== mKey){ clearBy('monthly'); data.lr.m = mKey; }
+
+        // 로드 및 저장 이벤트
+        var chks = document.getElementsByClassName('chk');
+        for(var i=0; i<chks.length; i++) {
+            (function(c){
+                var id = c.getAttribute('data-id');
+                if(data.tk[id]) c.checked = true;
+                c.onchange = function() {
+                    data.tk[id] = this.checked;
+                    localStorage.setItem(KEY, JSON.stringify(data));
+                };
+            })(chks[i]);
+        }
+        localStorage.setItem(KEY, JSON.stringify(data));
+        document.getElementById('status').innerHTML = '● 실시간 자동 저장 활성화';
+
+        window.resetAll = function() {
+            if(confirm('모든 체크를 지울까요?')) {
+                localStorage.removeItem(KEY);
+                location.reload();
+            }
+        };
+    })();
+</script>
+
+</body>
+</html>
