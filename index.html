@@ -7,11 +7,18 @@
     <link rel="shortcut icon" href="https://s1.blackdesertm.com/KR/Forum/BDM/Upload/WIKI/c0e9e49633320260310185122615.png">
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { margin: 0; padding: 5px; background-color: transparent; font-family: 'Malgun Gothic', sans-serif; }
-        .container { width: 100%; max-width: 900px; margin: 0 auto; background: #fff; border: 2px solid #d4af37; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+        body { margin: 0; padding: 0; background-color: transparent; font-family: 'Malgun Gothic', sans-serif; }
+        
+        /* 하단 잘림 방지를 위해 padding-bottom 30px 추가 */
+        .container { 
+            width: 100%; max-width: 900px; margin: 0 auto; 
+            background: #fff; border: 2px solid #d4af37; border-radius: 12px; 
+            overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            margin-bottom: 30px; 
+        }
+        
         .header { background: linear-gradient(135deg, #4e342e 0%, #212121 100%); padding: 15px; text-align: center; border-bottom: 3px solid #d4af37; }
         .header h1 { margin: 0; font-size: 19px; color: #ffffff; letter-spacing: 1px; }
-        /* 자동 리셋 상태 표시바 */
         .status_bar { background: #2d2d2d; color: #d4af37; font-size: 11px; padding: 5px; text-align: center; border-bottom: 1px solid #444; }
 
         .content_wrap { display: flex; flex-wrap: wrap; width: 100%; background: #fff; }
@@ -20,22 +27,23 @@
         .cate_bar { background: #f8f5f0; padding: 12px 5px; border-bottom: 2px solid #d4af37; text-align: center; }
         .cate_title { font-size: 16px; font-weight: bold; color: #5d4037; display: block; margin-bottom: 3px; }
         .cate_reset { font-size: 11px; font-weight: normal; color: #a1887f; display: block; }
+        
         .list_item { display: flex; align-items: center; padding: 10px 12px; border-bottom: 1px solid #f1f1f1; cursor: pointer; transition: 0.1s; }
         .list_item:hover { background: #fffcf0; }
         input[type="checkbox"] { width: 22px; height: 22px; margin-right: 12px; cursor: pointer; accent-color: #8c5326; flex-shrink: 0; }
         .txt { font-size: 15px; color: #333; font-weight: bold; line-height: 1.3; }
         input:checked + .txt { color: #bdbdbd; text-decoration: line-through; font-weight: normal; }
+        
         .footer { background: #f8f8f8; padding: 12px; text-align: center; border-top: 1px solid #eee; width: 100%; }
         .reset_btn { background: #607d8b; color: #ffffff; border: none; padding: 8px 25px; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="main_container">
     <div class="header">
         <h1>📜 초보 모험가 체크리스트!</h1>
     </div>
-    <!-- 시스템 작동 확인용 문구 -->
     <div id="system_msg" class="status_bar">매일/매주 월요일/매월 1일 00시에 자동으로 초기화됩니다.</div>
 
     <div class="content_wrap">
@@ -64,10 +72,10 @@
                 <span class="cate_title">📅 주간 콘텐츠</span>
                 <span class="cate_reset">매주 월요일 00:00 초기화</span>
             </div>
-            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w1"><span class="txt">끝없는 겨울의 산 주간 의뢰</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w1"><span class="txt">겨울산 주간 의뢰</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w2"><span class="txt">셰레칸의 땅 주간 의뢰</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w3"><span class="txt">대사막 정제수 소모 1시간</span></label>
-            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w4"><span class="txt">혼돈의 균열(두루마리 10장 구매)</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w4"><span class="txt">혼돈의 균열 (구매)</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w5"><span class="txt">검은 사당 5회</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w6"><span class="txt">라밤의 시련</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w7"><span class="txt">아토락시온 2회</span></label>
@@ -76,7 +84,7 @@
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w10"><span class="txt">태양의 전장 2회 승리</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w11"><span class="txt">협동 토벌대 완료</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w12"><span class="txt">아르옐리의 틈</span></label>
-            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w13"><span class="txt">파트리지오 납품 & 루시 벤쿰 납품(총 3종)</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w13"><span class="txt">파트리&루시 납품 (3종)</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w14"><span class="txt">월드 우두머리 토벌(흔적)</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w15"><span class="txt">뒤틀린 악몽 : 도성(흔적)</span></label>
             <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w16"><span class="txt">어둠의 틈(흔적)</span></label>
@@ -103,32 +111,23 @@
 
 <script>
     (function() {
-        var KEY = 'BDM_AUTO_RESETER_V3';
+        var KEY = 'BDM_AUTO_RESETER_V4'; // 키 이름 변경하여 새로고침 유도
         var now = new Date();
-        
-        // 1. 현재 시점 기준키 생성
-        var dK = now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate(); // 오늘
-        var mK = now.getFullYear()+'-'+(now.getMonth()+1); // 이번 달
-        
-        // 이번 주 월요일 날짜 구하기
+        var dK = now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();
+        var mK = now.getFullYear()+'-'+(now.getMonth()+1);
         var day = now.getDay();
         var diff = now.getDate() - day + (day == 0 ? -6 : 1);
         var monday = new Date(now.setDate(diff));
         var wK = monday.getFullYear()+'-'+(monday.getMonth()+1)+'-'+monday.getDate();
 
-        // 2. 저장된 데이터 불러오기
         var saved = localStorage.getItem(KEY);
         var data = saved ? JSON.parse(saved) : {lr:{d:'', w:'', m:''}, tk:{}};
-
         var resetHappened = [];
 
-        // 3. 자동 리셋 로직 (저장된 날짜와 현재 날짜 비교)
         function performReset(type) {
             var el = document.getElementsByClassName('chk');
             for(var i=0; i<el.length; i++) {
-                if(el[i].getAttribute('data-type') === type) {
-                    delete data.tk[el[i].getAttribute('data-id')];
-                }
+                if(el[i].getAttribute('data-type') === type) delete data.tk[el[i].getAttribute('data-id')];
             }
         }
 
@@ -136,7 +135,6 @@
         if(data.lr.w !== wK) { performReset('weekly'); data.lr.w = wK; resetHappened.push('주간'); }
         if(data.lr.m !== mK) { performReset('monthly'); data.lr.m = mK; resetHappened.push('월간'); }
 
-        // 4. 화면에 체크 상태 반영 및 저장 이벤트 등록
         var chks = document.getElementsByClassName('chk');
         for(var i=0; i<chks.length; i++){
             (function(c){
@@ -148,38 +146,25 @@
                 };
             })(chks[i]);
         }
-
-        // 5. 최종 데이터 업데이트 및 시스템 메시지 출력
         localStorage.setItem(KEY, JSON.stringify(data));
-        
+
         var msgEl = document.getElementById('system_msg');
-        if(resetHappened.length > 0) {
-            msgEl.innerHTML = '● ' + resetHappened.join(', ') + ' 숙제가 새로운 기간을 맞아 초기화되었습니다.';
-        } else {
-            msgEl.innerHTML = '● 매일/매주 월요일/매월 1일 00시에 자동으로 초기화됩니다.';
-        }
+        if(resetHappened.length > 0) msgEl.innerHTML = '● ' + resetHappened.join(', ') + ' 숙제가 초기화되었습니다.';
 
-        window.allClear = function(){ 
-            if(confirm('주의: 모든 체크 기록이 삭제됩니다. 진행할까요?')){ 
-                localStorage.removeItem(KEY); 
-                location.reload(); 
-            }
-        };
+        window.allClear = function(){ if(confirm('모든 기록을 초기화할까요?')){ localStorage.removeItem(KEY); location.reload(); }};
     })();
-    /* 부모 게시판에 높이 정보를 보내는 함수 */
-function sendHeight() {
-    var height = document.getElementsByClassName('container')[0].scrollHeight;
-    window.parent.postMessage({ 'bdmHeight': height + 20 }, "*");
-}
 
-/* 페이지 로드 시, 창 크기 변경 시 높이 전송 */
-window.onload = sendHeight;
-window.onresize = sendHeight;
-
-/* 체크박스 클릭 시에도 혹시 모르니 높이 전송 */
-document.querySelectorAll('.chk').forEach(function(el) {
-    el.addEventListener('change', sendHeight);
-});
+    /* 높이 자동 전송 보강 */
+    function sendHeight() {
+        setTimeout(function() {
+            var body = document.body, html = document.documentElement;
+            var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+            window.parent.postMessage({ 'bdmHeight': height + 10 }, "*");
+        }, 300); // 렌더링 시간을 위해 약간의 딜레이
+    }
+    window.onload = sendHeight;
+    window.onresize = sendHeight;
+    document.addEventListener('change', sendHeight);
 </script>
 </body>
 </html>
