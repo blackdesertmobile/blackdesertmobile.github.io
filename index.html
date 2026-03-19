@@ -172,17 +172,17 @@
     function toggleCheck(txt, val) { state.checked[txt] = val; save(); }
 
     function addNew(type) {
-        const txt = prompt('숙제 이름을 입력하세요:');
+        const txt = prompt('추가할 콘텐츠 이름을 입력해주세요.:');
         if(!txt) return;
         if(state.tasks.find(t => t.txt === txt)) { alert('이미 존재하는 이름입니다.'); return; }
         
-        const url = prompt('가이드 링크 주소를 입력하세요 (없으면 취소):', 'https://');
+        const url = prompt('가이드 링크 주소를 입력하세요 (없으면 취소로 건너뛰기):', 'https://');
         state.tasks.push({type, txt, url: (url === 'https://' ? '' : url)});
         save(); render();
     }
 
     function removeTask(txt) {
-        if(confirm(`'${txt}' 숙제를 삭제할까요?`)) {
+        if(confirm(`'${txt}' 해당 콘텐츠를 삭제할까요?`)) {
             state.tasks = state.tasks.filter(t => t.txt !== txt);
             delete state.checked[txt];
             save(); render();
