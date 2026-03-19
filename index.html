@@ -166,6 +166,20 @@
             }
         };
     })();
+    /* 부모 게시판에 높이 정보를 보내는 함수 */
+function sendHeight() {
+    var height = document.getElementsByClassName('container')[0].scrollHeight;
+    window.parent.postMessage({ 'bdmHeight': height + 20 }, "*");
+}
+
+/* 페이지 로드 시, 창 크기 변경 시 높이 전송 */
+window.onload = sendHeight;
+window.onresize = sendHeight;
+
+/* 체크박스 클릭 시에도 혹시 모르니 높이 전송 */
+document.querySelectorAll('.chk').forEach(function(el) {
+    el.addEventListener('change', sendHeight);
+});
 </script>
 </body>
 </html>
