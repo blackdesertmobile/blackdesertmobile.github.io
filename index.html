@@ -3,68 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BDM Checklist Compact</title>
+    <title>BDM Checklist 3-Column</title>
     <style>
-        /* [필수 규칙] 레이아웃 안정성 및 초슬림 간격 설정 */
+        /* [필수 규칙] 레이아웃 안정성 및 3단 칼럼 설정 */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
-            margin: 0; padding: 2px; background-color: transparent; 
+            margin: 0; padding: 5px; background-color: transparent; 
             font-family: 'Malgun Gothic', sans-serif; 
         }
 
         .container {
-            width: 100%; max-width: 800px; margin: 0 auto;
-            background: #ffffff; border: 2px solid #d4af37; border-radius: 8px;
-            overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 100%; max-width: 900px; margin: 0 auto;
+            background: #ffffff; border: 2px solid #d4af37; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
-        /* 헤더: 최소 높이로 압축 */
+        /* 헤더 */
         .header {
-            background: linear-gradient(to right, #4e342e, #212121);
-            padding: 10px; text-align: center; border-bottom: 2px solid #d4af37;
+            background: linear-gradient(135deg, #4e342e 0%, #212121 100%);
+            padding: 15px; text-align: center; border-bottom: 3px solid #d4af37;
         }
-        .header h1 { margin: 0; font-size: 17px; color: #ffffff; letter-spacing: 1px; }
+        .header h1 { margin: 0; font-size: 19px; color: #ffffff; letter-spacing: 1px; }
 
-        /* 카테고리 바: 슬림화 */
-        .cate_bar {
-            background: #f1ede4; padding: 6px 12px; border-bottom: 1px solid #d4af37;
-            font-size: 13px; font-weight: bold; color: #5d4037; display: flex; justify-content: space-between;
-        }
-
-        /* 3열 그리드 레이아웃 */
-        .list_group {
+        /* 3단 칼럼 레이아웃 전용 컨테이너 */
+        .content_wrap {
             display: flex; flex-wrap: wrap; width: 100%; background: #fff;
         }
 
-        .list_item {
-            flex: 1 1 31%; /* 3열 배치 핵심 */
-            min-width: 180px; /* 좁아지면 자동 줄바꿈 */
-            display: flex; align-items: center; 
-            padding: 6px 10px; /* 위아래 간격 최소화 */
-            border-bottom: 1px solid #f0f0f0; 
-            border-right: 1px solid #f9f9f9;
-            cursor: pointer;
+        /* 각 칼럼 설정 */
+        .column {
+            flex: 1 1 31%; /* 3열 배치 */
+            min-width: 260px; /* 모바일 대응: 폭이 좁아지면 아래로 떨어짐 */
+            border-right: 1px solid #e0e0e0;
+            display: flex; flex-direction: column;
         }
-        .list_item:hover { background: #fffef0; }
+        .column:last-child { border-right: none; }
 
-        /* 체크박스: 콤팩트 사이즈 */
+        /* 칼럼별 타이틀 바 */
+        .cate_bar {
+            background: #f8f5f0; padding: 10px; border-bottom: 2px solid #d4af37;
+            font-size: 15px; font-weight: bold; color: #5d4037; text-align: center;
+        }
+
+        /* 숙제 항목 슬림화 */
+        .list_item {
+            display: flex; align-items: center; padding: 10px 12px;
+            border-bottom: 1px solid #f1f1f1; cursor: pointer; transition: 0.2s;
+        }
+        .list_item:hover { background: #fffcf0; }
+
+        /* 체크박스 및 텍스트 */
         input[type="checkbox"] {
-            width: 18px; height: 18px; margin-right: 8px; cursor: pointer;
+            width: 22px; height: 22px; margin-right: 12px; cursor: pointer;
             accent-color: #8c5326; flex-shrink: 0;
         }
-
-        /* 텍스트: 가독성 유지하며 압축 */
         .txt { 
-            font-size: 14px; color: #333; font-weight: bold; 
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis; 
+            font-size: 15px; /* 시스템 규칙 준수 */
+            color: #333; font-weight: bold; line-height: 1.3;
         }
-        input:checked + .txt { color: #ccc; text-decoration: line-through; font-weight: normal; }
+        input:checked + .txt { color: #bdbdbd; text-decoration: line-through; font-weight: normal; }
 
-        /* 하단 버튼 영역 */
-        .footer { background: #f9f9f9; padding: 8px; text-align: center; border-top: 1px solid #eee; }
+        /* 하단 푸터 */
+        .footer { background: #f8f8f8; padding: 12px; text-align: center; border-top: 1px solid #eee; width: 100%; }
         .reset_btn {
-            background: #78909c; color: #ffffff; border: none; padding: 5px 20px;
-            border-radius: 3px; cursor: pointer; font-size: 12px;
+            background: #607d8b; color: #ffffff; border: none; padding: 8px 25px;
+            border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold;
         }
     </style>
 </head>
@@ -72,57 +75,59 @@
 
 <div class="container">
     <div class="header">
-        <h1>📜 모험가 숙제 체크리스트</h1>
+        <h1>📜 모험가 통합 숙제 체크리스트</h1>
     </div>
 
-    <!-- 1. 일일 숙제 -->
-    <div class="cate_bar">☀️ 일일 숙제 <span style="font-weight:normal; font-size:10px;">(00:00 초기화)</span></div>
-    <div class="list_group">
-        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d1"><span class="txt">모험의 열기</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d2"><span class="txt">특수 지령</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d3"><span class="txt">수련의 탑</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d4"><span class="txt">흑정령 의뢰(2)</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d5"><span class="txt">길드 의뢰</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d6"><span class="txt">파트리지오 상점</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d7"><span class="txt">월드 경영</span></label>
-        <div class="list_item" style="border-bottom:none; border-right:none; flex: 1 1 62%;"></div> <!-- 여백 채우기 -->
-    </div>
+    <div class="content_wrap">
+        <!-- 1. 왼쪽: 일일 숙제 (7종) -->
+        <div class="column">
+            <div class="cate_bar">☀️ 일일 숙제</div>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d1"><span class="txt">모험의 열기 소모</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d2"><span class="txt">특수 지령 완료</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d3"><span class="txt">수련의 탑 진행</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d4"><span class="txt">흑정령 의뢰 (2종)</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d5"><span class="txt">길드 의뢰 완료</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d6"><span class="txt">파트리지오 상점</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="daily" data-id="d7"><span class="txt">월드 경영 진행</span></label>
+            <div style="flex-grow: 1; background: #fafafa;"></div> <!-- 하단 빈공간 채우기 -->
+        </div>
 
-    <!-- 2. 주간 숙제 -->
-    <div class="cate_bar">📅 주간 숙제 <span style="font-weight:normal; font-size:10px;">(월요일 초기화)</span></div>
-    <div class="list_group">
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w1"><span class="txt">의형제 토벌</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w2"><span class="txt">라밤의 시련</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w3"><span class="txt">아토락시온(2)</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w4"><span class="txt">셰레칸 주간의뢰</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w5"><span class="txt">겨울산 주간의뢰</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w6"><span class="txt">태양의 전장(2승)</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w7"><span class="txt">협동 토벌대</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w8"><span class="txt">대사막 정제수</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w9"><span class="txt">파트리&루시납품</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w10"><span class="txt">아르옐리 파견</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w11"><span class="txt">영광의 길(5회)</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w12"><span class="txt">혼돈 균열서(10)</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w13"><span class="txt">검은사당(5회)</span></label>
-        <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w14"><span class="txt">빙어튀김 납품</span></label>
-        <div class="list_item" style="border-bottom:none; border-right:none;"></div> <!-- 여백 채우기 -->
-    </div>
+        <!-- 2. 가운데: 주간 숙제 (14종) -->
+        <div class="column" style="min-width: 280px;">
+            <div class="cate_bar">📅 주간 숙제</div>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w1"><span class="txt">의형제 토벌</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w2"><span class="txt">라밤의 시련</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w3"><span class="txt">아토락시온 (2회)</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w4"><span class="txt">셰레칸 주간 의뢰</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w5"><span class="txt">겨울산 주간 의뢰</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w6"><span class="txt">태양의 전장 (2승)</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w7"><span class="txt">협동 토벌대 완료</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w8"><span class="txt">대사막 정제수</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w9"><span class="txt">파트리&루시 납품</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w10"><span class="txt">아르옐리의 틈 파견</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w11"><span class="txt">영광의 길 (5회)</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w12"><span class="txt">혼돈 균열서 10장</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w13"><span class="txt">검은사당 (5회)</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="weekly" data-id="w14"><span class="txt">빙어튀김 납품</span></label>
+        </div>
 
-    <!-- 3. 월간 숙제 -->
-    <div class="cate_bar">🏆 월간 숙제 <span style="font-weight:normal; font-size:10px;">(1일 초기화)</span></div>
-    <div class="list_group">
-        <label class="list_item"><input type="checkbox" class="chk" data-type="monthly" data-id="m1"><span class="txt">므로웨크의 미궁</span></label>
-        <label class="list_item" style="flex: 1 1 66%;"><input type="checkbox" class="chk" data-type="monthly" data-id="m2"><span class="txt">대사막 사원/신기루</span></label>
+        <!-- 3. 오른쪽: 월간 숙제 (2종) -->
+        <div class="column">
+            <div class="cate_bar">🏆 월간 숙제</div>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="monthly" data-id="m1"><span class="txt">므로웨크의 미궁</span></label>
+            <label class="list_item"><input type="checkbox" class="chk" data-type="monthly" data-id="m2"><span class="txt">대사막 사원/신기루</span></label>
+            <div style="flex-grow: 1; background: #fafafa;"></div> <!-- 하단 빈공간 채우기 -->
+        </div>
     </div>
 
     <div class="footer">
-        <button class="reset_btn" onclick="allClear()">전체 초기화</button>
+        <button class="reset_btn" onclick="allClear()">기록 초기화</button>
     </div>
 </div>
 
 <script>
     (function() {
-        var KEY = 'BDM_ULTRA_COMPACT_V1';
+        var KEY = 'BDM_3COL_SYNC_V1';
         var now = new Date();
         var dK = now.getFullYear()+'-'+(now.getMonth()+1)+'-'+now.getDate();
         var mK = now.getFullYear()+'-'+(now.getMonth()+1);
@@ -155,7 +160,7 @@
             })(chks[i]);
         }
         localStorage.setItem(KEY, JSON.stringify(data));
-        window.allClear = function(){ if(confirm('초기화할까요?')){ localStorage.removeItem(KEY); location.reload(); }};
+        window.allClear = function(){ if(confirm('모든 기록을 초기화할까요?')){ localStorage.removeItem(KEY); location.reload(); }};
     })();
 </script>
 </body>
